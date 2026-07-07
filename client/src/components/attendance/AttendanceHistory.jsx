@@ -5,9 +5,9 @@ import { format } from "date-fns";
 const AttendanceHistory = ({ history }) => {
   return (
     <div className="card overflow-hidden">
-      <h3 className="px-6 py-4 border-b font-bold border-slate-100">
-        Recent Activity
-      </h3>
+      <div className="px-6 py-4 border-b border-slate-100">
+        <h3 className="font-semibold text-slate-900">Recent Activity</h3>
+      </div>
       <div className="overflow-x-auto">
         <table className="table-modern">
           <thead>
