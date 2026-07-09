@@ -35,7 +35,7 @@ const SideBar = () => {
     windows.location.href = "/login";
   };
 
-  const role = "ADMIN" || "EMPLOYEE"; // Replace with actual role logic
+  const role = "" || "EMPLOYEE"; // Replace with actual role logic
   const navItems = [
     {
       name: "Dashboard",
