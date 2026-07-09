@@ -59,7 +59,7 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
                       {leave.reason}
                     </td>
                     <td
-                      className={`badge ${leave.status === "APPROVED" ? "badge-success" : leave.status === "REJECT" ? "badge-danger" : "badge-warning"}`}
+                      className={`badge ${leave.status === "APPROVED" ? "badge-success" : leave.status === "REJECTED" ? "badge-danger" : "badge-warning"}`}
                     >
                       <span>{leave.status}</span>
                     </td>
