@@ -55,7 +55,7 @@ const PayslipList = ({ payslips, isAdmin }) => {
                         className="inline-flex items-center px-3 py-1.5 text-sm font-medium rounded text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors ring-1 ring-blue-600/10"
                         onClick={() =>
                           window.open(
-                            `/print/payslips/${payslip._id || payslip.id}`,
+                            `/print/payslip/${payslip._id || payslip.id}`,
                           )
                         }
                       >
