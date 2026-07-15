@@ -67,6 +67,9 @@ export const getAttendance = async (req, res) => {
     const session = req.session;
     const employee = await Employee.findOne({ userId: session.userId });
     if (!employee) return res.status(404).json({ error: "Employee not found" });
+    if (employee.isDeleted) {
+      return res.status(403).json({ error: "Your account is deactivated" });
+    }
 
     const limit = parseInt(req.query.limit || 30);
     const history = await Attendance.find({ employeeId: employee._id })

@@ -14,6 +14,9 @@ export const getProfile = async (req, res) => {
         email: session.email,
       });
     }
+    if (employee.isDeleted) {
+      return res.status(403).json({ error: "Your account is deactivated" });
+    }
     return res.json(employee);
   } catch (error) {
     return res.status(500).json({ error: "fail to fetch profile" });
