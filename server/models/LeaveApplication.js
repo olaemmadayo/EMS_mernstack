@@ -13,8 +13,8 @@ const leaveApplicationSchema = new mongoose.Schema(
     reason: { type: String, required: true },
     status: {
       type: String,
-      enum: ["PENDING", "APPROVED", "REJECT"],
-      default: "PENDIND",
+      enum: ["PENDING", "APPROVED", "REJECTED"],
+      default: "PENDING",
     },
   },
   { timestamps: true },

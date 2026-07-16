@@ -2,7 +2,7 @@ import Employee from "../models/Employee.js";
 import LeaveApplication from "../models/LeaveApplication.js";
 
 //Create Leave
-//Post /api/leaves
+//POST /api/leave
 
 export const createLeave = async (req, res) => {
   try {
@@ -14,7 +14,7 @@ export const createLeave = async (req, res) => {
         error: "Your account is deactivated. You cannot apply for leave.",
       });
     }
-    const { type, startDate, endDate, reason } = req;
+    const { type, startDate, endDate, reason } = req.body;
     if (!type || !startDate || !endDate || !reason) {
       return res.status(400).json({ error: "Missing fields" });
     }
@@ -37,6 +37,7 @@ export const createLeave = async (req, res) => {
       type,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
+      reason,
       status: "PENDING",
     });
     return res.json({ success: true, data: leave });
@@ -46,7 +47,7 @@ export const createLeave = async (req, res) => {
 };
 
 //get Leaves
-//GET /api/leaves
+//GET /api/leave
 
 export const getLeave = async (req, res) => {
   try {
@@ -73,6 +74,9 @@ export const getLeave = async (req, res) => {
         userId: session.userId,
       }).lean();
       if (!employee) return res.status(404).json({ error: "Not Found" });
+      if (employee.isDeleted) {
+        return res.status(403).json({ error: "Your account is deactivated" });
+      }
       const leaves = await LeaveApplication.find({
         employeeId: employee._id,
       }).sort({ createdAt: -1 });
@@ -87,7 +91,7 @@ export const getLeave = async (req, res) => {
 };
 
 //update Leave status
-//GET /api/leaves
+//PATCH /api/leave/:id
 
 export const updateLeaveStatus = async (req, res) => {
   try {
