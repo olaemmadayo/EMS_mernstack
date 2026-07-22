@@ -1,12 +1,22 @@
 import { Check, Loader2, X } from "lucide-react";
 import { useState } from "react";
 import { format } from "date-fns";
+import api from "../../api/axios";
+import toast from "react-hot-toast";
 
 const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
-  const [processing, setProcessing] = useState(false);
+  const [processing, setProcessing] = useState(null);
 
   const handleStatusUpdate = async (id, status) => {
     setProcessing(id);
+    try {
+      await api.patch(`/leave/${id}`, { status });
+      onUpdate();
+    } catch (error) {
+      toast.error(error?.response?.data?.error || error.message);
+    } finally {
+      setProcessing(null);
+    }
   };
 
   return (
@@ -71,10 +81,7 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
                             <button
                               className="p-1.5 rounded-md bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors"
                               onClick={() =>
-                                handleStatusUpdate(
-                                  leave_.id || leave.id,
-                                  "APPROVED",
-                                )
+                                handleStatusUpdate(leave.id, "APPROVED")
                               }
                               disabled={!!processing}
                             >
@@ -87,10 +94,7 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
 
                             <button
                               onClick={() =>
-                                handleStatusUpdate(
-                                  leave_.id || leave.id,
-                                  "REJECTED",
-                                )
+                                handleStatusUpdate(leave.id, "REJECTED")
                               }
                               disabled={!!processing}
                               className="p-1.5 rounded-md bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors"

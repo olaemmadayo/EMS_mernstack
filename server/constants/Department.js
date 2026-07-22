@@ -9,4 +9,5 @@ export const DEPARTMENTS = [
   "Customer Success",
   "Product Management",
   "Design",
+  "Quality Control",
 ];
