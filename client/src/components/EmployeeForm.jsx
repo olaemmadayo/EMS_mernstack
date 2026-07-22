@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { DEPARTMENTS } from "../assets/assets";
 import { Loader2Icon } from "lucide-react";
+import toast from "react-hot-toast";
+import api from "../api/axios";
 
 const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
   const [loading, setLoading] = useState(false);
@@ -10,6 +12,26 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
   const isEditMode = !!initialData;
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    if (isEditMode) {
+      const pwd = formData.get("password");
+      if (!pwd) formData.delete("password");
+    }
+    try {
+      const url = isEditMode ? `/employees/${initialData.id}` : "/employees";
+      const method = isEditMode ? "put" : "post";
+      await api[method](url, formData);
+      if (onSuccess) {
+        await onSuccess();
+      } else {
+        navigate("/employees");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.error || error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -103,6 +125,7 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
               name="department"
               defaultValue={initialData?.department || ""}
               className="w-full"
+              required
             >
               <option value="">Select a department</option>
               {DEPARTMENTS.map((deptName) => (
@@ -172,7 +195,7 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
                 Status
               </label>
               <select
-                name="EmployeeStatus"
+                name="employmentStatus"
                 defaultValue={initialData?.EmployeeStatus}
                 className="w-full"
               >
@@ -208,7 +231,7 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
               </label>
               <input
                 type="password"
-                name="temporaryPassword"
+                name="password"
                 required
                 className="w-full"
               />
@@ -221,7 +244,7 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
               </label>
               <input
                 type="password"
-                name="Password"
+                name="password"
                 placeholder="Leave blank to keep current password"
                 className="w-full"
               />
@@ -239,46 +262,6 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }) => {
               <option value="EMPLOYEE">Employee</option>
               <option value="ADMIN">Admin</option>
             </select>
-          </div>
-          <div className="">
-            <label className="block mb-2 font-medium" htmlFor="phone">
-              Phone Number
-            </label>
-            <input
-              type="text"
-              name="phone"
-              required
-              defaultValue={initialData?.phone}
-              className="w-full"
-            />
-          </div>
-          <div className="">
-            <label className="block mb-2 font-medium" htmlFor="joinDate">
-              Join Date
-            </label>
-            <input
-              type="date"
-              name="joinDate"
-              required
-              defaultValue={
-                initialData?.joinDate
-                  ? new Date(initialData.joinDate).toISOString().split("T")[0]
-                  : ""
-              }
-              className="w-full"
-            />
-          </div>
-          <div className="sm:col-span-2">
-            <label className="block mb-2 font-medium" htmlFor="bio">
-              Bio (optional)
-            </label>
-            <textarea
-              name="bio"
-              defaultValue={initialData?.bio}
-              rows={3}
-              placeholder="Write a brief description..."
-              className="w-full resize-none"
-            />
           </div>
         </div>
       </div>

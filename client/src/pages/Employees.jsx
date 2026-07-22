@@ -1,8 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
-import { dummyEmployeeData, DEPARTMENTS } from "../assets/assets";
+import { DEPARTMENTS } from "../assets/assets";
 import { Plus, Search, X } from "lucide-react";
 import EmployeeCard from "../components/EmployeeCard";
 import EmployeeForm from "../components/EmployeeForm";
+import api from "../api/axios";
 
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
@@ -14,14 +15,17 @@ const Employees = () => {
 
   const fetchEmployees = useCallback(async () => {
     setLoading(true);
-    setEmployees(
-      dummyEmployeeData.filter((emp) =>
-        selectedDept ? emp.department === selectedDept : true,
-      ),
-    );
-    setTimeout(() => {
+    try {
+      const url = selectedDept
+        ? `/employees?department=${encodeURIComponent(selectedDept)}`
+        : "/employees";
+      const res = await api.get(url);
+      setEmployees(res.data);
+    } catch (error) {
+      console.error("Failed to fetch employees");
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   }, [selectedDept]);
 
   useEffect(() => {
@@ -128,7 +132,7 @@ const Employees = () => {
               <EmployeeForm
                 onSuccess={() => {
                   setShowCreateModal(false);
-                  fetchEmployees();
+                  return fetchEmployees();
                 }}
                 onCancel={() => setShowCreateModal(false)}
               />
@@ -167,7 +171,7 @@ const Employees = () => {
                 initialData={editEmployee}
                 onSuccess={() => {
                   setEditEmployee(null);
-                  fetchEmployees();
+                  return fetchEmployees();
                 }}
                 onCancel={() => setEditEmployee(null)}
               />

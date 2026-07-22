@@ -1,8 +1,10 @@
 import React from "react";
 import LoginLeftSide from "./LoginLeftSide";
 import { ArrowLeftIcon, EyeOffIcon, EyeIcon, Loader2Icon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const LoginForm = ({ role, title, subtitle }) => {
   const [email, setEmail] = useState("");
@@ -11,10 +13,24 @@ const LoginForm = ({ role, title, subtitle }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  //authenticate login
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
+    try {
+      await login(email, password, role);
+      navigate("/dashboard");
+    } catch (error) {
+      toast.error(
+        error.response?.data?.error || error.message || "Login failed",
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -71,6 +87,7 @@ const LoginForm = ({ role, title, subtitle }) => {
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pr-11 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="********"
@@ -92,7 +109,7 @@ const LoginForm = ({ role, title, subtitle }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-linear-to-r from-indigo-600 to-indigo-500 text-white font-semibold rounded-md hover:from-indigo-700 hover:to-indigo-700   disable:opacity-50 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/25 active:scale[0.98]"
+              className="w-full py-3 px-4 bg-linear-to-r from-indigo-600 to-indigo-500 text-white font-semibold rounded-md hover:from-indigo-700 hover:to-indigo-700   disabled:opacity-50 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/25 active:scale-[0.98]"
             >
               {loading && <Loader2Icon className="animate-spin h-4 w-4 mr-2" />}
               Sign In
