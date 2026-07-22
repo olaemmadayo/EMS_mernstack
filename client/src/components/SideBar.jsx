@@ -87,7 +87,7 @@ const SideBar = () => {
             <UserIcon className="text-white size-7" />
             <div className="">
               <p className="font-semibold text-[13px] text-white tracking-wide">
-                Employee MS
+                Lootah EMS
               </p>
               <p className="text-[11px] text-slate-500 font-medium">
                 Management System
