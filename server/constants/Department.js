@@ -10,4 +10,9 @@ export const DEPARTMENTS = [
   "Product Management",
   "Design",
   "Quality Control",
+  "Embedding",
+  "Personalization",
+  "Punching",
+  "Packaging",
+  "Maintenance",
 ];
