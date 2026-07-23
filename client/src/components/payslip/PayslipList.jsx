@@ -29,7 +29,7 @@ const PayslipList = ({ payslips, isAdmin }) => {
             ) : (
               payslips.map((payslip) => {
                 return (
-                  <tr key={payslip.id || payslip.id}>
+                  <tr key={payslip.id || payslip._id}>
                     {isAdmin && (
                       <td className=" text-slate-900">
                         {payslip.employee?.firstName}{" "}
@@ -40,7 +40,7 @@ const PayslipList = ({ payslips, isAdmin }) => {
                     <td className="text-slate-500">
                       {format(
                         new Date(payslip.year, payslip.month - 1),
-                        "MMM yyy",
+                        "MMM yyyy",
                       )}
                     </td>
                     <td className=" text-slate-500">

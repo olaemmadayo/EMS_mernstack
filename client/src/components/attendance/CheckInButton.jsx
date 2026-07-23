@@ -1,5 +1,5 @@
 import { Loader2Icon, LogInIcon, LogOut } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import api from "../../api/axios";
 
 const CheckInButton = ({ todayRecord, onAction }) => {

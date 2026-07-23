@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { dummyProfileData } from "../assets/assets";
 import Loading from "../components/Loading";
 import { Lock } from "lucide-react";
 import ProfileForm from "../components/ProfileForm";
 import ChangePasswordModal from "../components/ChangePasswordModal";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import api from "../api/axios";
 import toast from "react-hot-toast";
 
@@ -36,7 +35,7 @@ const Settings = () => {
     <div className="animate-fade-in">
       <div className="page-header">
         <h1 className="page-title">Settings</h1>
-        <p className="page-Subtitle">Manage your account and preferences</p>
+        <p className="page-subtitle">Manage your account and preferences</p>
       </div>
       {profile && (
         <ProfileForm initialData={profile} onSuccess={fetchProfile} />

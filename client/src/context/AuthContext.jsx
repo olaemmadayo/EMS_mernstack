@@ -1,10 +1,6 @@
-import { useState } from "react";
-import { useContext } from "react";
-import { createContext } from "react";
+import { useEffect, useState } from "react";
 import api from "../api/axios";
-import { useEffect } from "react";
-
-const AuthContext = createContext(null);
+import { AuthContext } from "./useAuth";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -22,8 +18,8 @@ export function AuthProvider({ children }) {
     try {
       const { data } = await api.get("/auth/session");
       setUser(data.user);
-    } catch (error) {
-      // Token is Invalid, clear it.
+    } catch {
+      // Token is invalid, clear it.
       localStorage.removeItem("token");
       setUser(null);
       setToken(null);
@@ -53,10 +49,4 @@ export function AuthProvider({ children }) {
 
   const value = { user, token, loading, login, logout, refreshSession };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
-  return ctx;
 }

@@ -46,7 +46,7 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
             ) : (
               leaves.map((leave) => {
                 return (
-                  <tr key={leave.id || leave.id}>
+                  <tr key={leave.id || leave._id}>
                     {isAdmin && (
                       <td className=" text-slate-900">
                         {leave.employee?.firstName} {leave.employee?.lastName}
@@ -85,7 +85,7 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
                               }
                               disabled={!!processing}
                             >
-                              {processing == (leave.id || leave.id) ? (
+                              {processing === leave.id ? (
                                 <Loader2 className="w-4 h-4 animate-spin" />
                               ) : (
                                 <Check className="w-4 h-4 " />
@@ -99,7 +99,7 @@ const LeaveHistory = ({ leaves, isAdmin, onUpdate }) => {
                               disabled={!!processing}
                               className="p-1.5 rounded-md bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors"
                             >
-                              {processing == (leave.id || leave.id) ? (
+                              {processing === leave.id ? (
                                 <Loader2 className="w-4 h-4 animate-spin" />
                               ) : (
                                 <X className="w-4 h-4 " />

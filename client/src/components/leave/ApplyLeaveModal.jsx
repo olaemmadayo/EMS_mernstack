@@ -21,7 +21,7 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
       onSuccess();
       onClose();
     } catch (error) {
-      toast.error(err.response?.data?.error || err?.message);
+      toast.error(error.response?.data?.error || error?.message);
     }
   };
   if (!open) return null;
@@ -31,7 +31,7 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg animate-fate-in"
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg animate-fade-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* {---------Header--------} */}
@@ -66,7 +66,7 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
             </select>
           </div>
           {/* ----- duration ------ */}
-          <div className="div">
+          <div>
             <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-2">
               <CalendarIcon className="w-4 h-4 text-slate-400" />
               Duration
@@ -91,7 +91,7 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
               name="reason"
               required
               rows={3}
-              placeholder="Briefly descbribe why you need this leave..."
+              placeholder="Briefly describe why you need this leave..."
               className="resize-none"
             />
           </div>
@@ -107,7 +107,7 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
             <button
               type="submit"
               disabled={loading}
-              className="btn-primary flex-1 flex item-center justify-center gap-2 "
+              className="btn-primary flex-1 flex items-center justify-center gap-2 "
             >
               {loading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { dummyPayslipData } from "../assets/assets";
 import Loading from "../components/Loading";
 import { format } from "date-fns";
 import api from "../api/axios";
@@ -10,16 +9,13 @@ const PrintPayslip = () => {
   const [payslip, setPayslip] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(
-    () => {
-      api
-        .get(`/payslips/${id}`)
-        .then((res) => setPayslip(res.data))
-        .catch(console.error)
-        .finally(() => setLoading(false));
-    },
-    { id },
-  );
+  useEffect(() => {
+    api
+      .get(`/payslips/${id}`)
+      .then((res) => setPayslip(res.data))
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [id]);
 
   if (loading) return <Loading />;
   if (!payslip)
