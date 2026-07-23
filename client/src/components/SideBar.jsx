@@ -12,12 +12,10 @@ import {
   LogOutIcon,
   Loader2,
 } from "lucide-react";
-import React from "react";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { dummyProfileData } from "../assets/assets";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import api from "../api/axios";
 
 const SideBar = () => {

@@ -4,8 +4,6 @@ import {
   FileTextIcon,
   UserIcon,
 } from "lucide-react";
-import React from "react";
-
 const AdminDashboard = ({ data }) => {
   const stats = [
     {

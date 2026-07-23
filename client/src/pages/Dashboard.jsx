@@ -1,20 +1,13 @@
 import { useEffect, useState } from "react";
-import {
-  dummyEmployeeDashboardData,
-  dummyAdminDashboardData,
-} from "../assets/assets";
 import Loading from "../components/Loading";
 import EmployeeDashboard from "../components/EmployeeDashboard";
 import AdminDashboard from "../components/AdminDashboard";
 import api from "../api/axios";
 import toast from "react-hot-toast";
-import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const { user } = useAuth();
 
   useEffect(() => {
     api

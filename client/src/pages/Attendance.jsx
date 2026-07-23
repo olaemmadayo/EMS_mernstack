@@ -1,7 +1,6 @@
 import CheckInButton from "../components/attendance/CheckInButton";
 import Loading from "../components/Loading";
 import { useState, useEffect, useCallback } from "react";
-import { dummyAttendanceData } from "../assets/assets";
 import AttendanceStats from "../components/attendance/AttendanceStats";
 import AttendanceHistory from "../components/attendance/AttendanceHistory";
 import api from "../api/axios";

@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { dummyLeaveData } from "../assets/assets";
+import { useState, useCallback, useEffect } from "react";
 import Loading from "../components/Loading";
 import {
   ThermometerIcon,
@@ -9,7 +8,7 @@ import {
 } from "lucide-react";
 import LeaveHistory from "../components/leave/LeaveHistory";
 import ApplyLeaveModal from "../components/leave/ApplyLeaveModal";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import api from "../api/axios";
 import toast from "react-hot-toast";
 

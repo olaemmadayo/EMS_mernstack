@@ -1,9 +1,8 @@
-import React from "react";
 import LoginLeftSide from "./LoginLeftSide";
 import { ArrowLeftIcon, EyeOffIcon, EyeIcon, Loader2Icon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import toast from "react-hot-toast";
 
 const LoginForm = ({ role, title, subtitle }) => {
